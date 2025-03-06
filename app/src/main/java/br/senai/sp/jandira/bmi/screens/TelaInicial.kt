@@ -11,16 +11,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -29,6 +35,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +43,10 @@ import br.senai.sp.jandira.bmi.R
 
 @Composable
 fun TelaInicial(modifier: Modifier = Modifier) {
+    var nomeState = remember {
+        mutableStateOf(value = "")
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -48,21 +59,19 @@ fun TelaInicial(modifier: Modifier = Modifier) {
             ), contentAlignment = Alignment.BottomCenter
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = stringResource(R.string.logo_description),
-                modifier = Modifier
-                    .padding(top = 50.dp)
+                modifier = Modifier.padding(top = 50.dp)
             )
             Text(
                 text = stringResource(R.string.welcome),
                 fontSize = 40.sp,
-                color = Color.White
+                color = Color.White,
             )
             Card(
                 modifier = Modifier
@@ -85,30 +94,35 @@ fun TelaInicial(modifier: Modifier = Modifier) {
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(start = 16.dp)
                         )
-                        OutlinedTextField(
-                            value = "",
-                            onValueChange = {},
+                        OutlinedTextField(value = nomeState.value,
+                            onValueChange = {
+                                nomeState.value = it
+                            },
                             modifier = Modifier
                                 .padding(start = 20.dp, top = 10.dp)
                                 .fillMaxWidth(),
                             shape = RoundedCornerShape(16.dp),
                             label = {
                                 Text(text = stringResource(R.string.your_name_here))
-                            }
-                        )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.AccountCircle,
+                                    contentDescription = "",
+                                    tint = Color(0xFFA045E5)
+                                )
+                            })
 
-                        }
+                    }
                     Button(
-                        onClick = {},
-                        shape = RoundedCornerShape(12.dp),
+                        onClick = {}, shape = RoundedCornerShape(12.dp)
 
-                        ) {
+                    ) {
                         Text(
                             text = stringResource(R.string.next)
                         )
                         Icon(
-                            imageVector = Icons.Filled.ArrowForward,
-                            contentDescription = ""
+                            imageVector = Icons.Filled.ArrowForward, contentDescription = ""
                         )
                     }
 
